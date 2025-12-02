@@ -1,0 +1,25 @@
+{
+    "name": "alumnosdaw/prestamo-libros",
+    "description": "Aplicación web para gestionar préstamos de libros",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marcos López González",
+            "email": "2005052@alu.murciaeduca.es"
+        },
+        {
+            "name": "Mohamed-Amin El Friti Laghzaoui",
+            "email": ""
+        },
+        {
+            "name": "Juan Miguel Martínez Sánchez",
+            "email": ""
+        }
+    ],
+    "require": {}
+}
