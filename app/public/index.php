@@ -58,7 +58,8 @@
                                 <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-lg shadow">Entrar</button>
                             </div>
 
-                            <div class="mt-3">
+                            <!-- Para el futuro -->
+                            <!-- <div class="mt-3">
                                 <div class="text-center text-sm text-gray-500 mb-3">o inicia sesión con</div>
                                 <div class="flex gap-3">
                                     <button type="button" class="flex-1 inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm hover:shadow">
@@ -68,7 +69,7 @@
                                         Google
                                     </button>
                                 </div>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
 
