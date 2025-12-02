@@ -36,6 +36,10 @@ function alternarVista() {
   }
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  mostrarPopup();
+});
+
 function mostrarPopup() {
   const popup = document.getElementById("popup");
   if (!popup) return;

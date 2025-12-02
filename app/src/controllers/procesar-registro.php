@@ -39,7 +39,7 @@ if ($email === "") {
 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errores["email"] = "Email no válido";
 } else if (existeEmail($email)) {
-    $errores["existeEmail"] = "El email $email ya está registrado";
+    $errores["email"] = "El email $email ya está registrado";
 } else {
     $recordar["email"] = $email;
 }
@@ -47,7 +47,7 @@ if ($email === "") {
 if ($username === "") {
     $errores["username"] = "Usuario vacío";
 } else if (existeUsuario($username)) {
-    $errores["existeUsername"] = "El usuario $username no está disponible";
+    $errores["username"] = "El usuario $username no está disponible";
 } else {
     $recordar["username"] = $username;
 }

@@ -152,10 +152,6 @@ if (isset($_SESSION["recordar"]))
             $popupMensaje = '¡Usuario creado correctamente!';
         } else if (isset($_SESSION["errores"]["creacion"])) {
             $popupMensaje = 'Error al intentar registro';
-        } else if (!empty($_SESSION["errores"]["existeUsername"])) {
-            $popupMensaje = 'El nombre de usuario ya existe';
-        } else if (!empty($_SESSION["errores"]["existeEmail"])) {
-            $popupMensaje = 'El correo electrónico ya existe';
         } else {
             $popupMensaje = 'Verifica los campos';
         }
@@ -167,13 +163,7 @@ if (isset($_SESSION["recordar"]))
             </div>
         </div>
 
-        <script>
-            mostrarPopup();
-        </script>
-
-    <?php
-    endif;
-    ?>
+    <?php endif; ?>
 
 
 </body>
