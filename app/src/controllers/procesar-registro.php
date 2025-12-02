@@ -64,7 +64,7 @@ if (count($errores) !== 0) {
     header("Location: ./../../public/index.php");
     die;
 } else {
-    $usuario = new Usuario(null, $nombre, $apellidos, $email, $username, $password);
+    $usuario = new Usuario(null, $nombre, $apellidos, $email, $username, password_hash($password, PASSWORD_DEFAULT));
     if ($db->addUser($usuario)) {
         $_SESSION["creacion"] = true;
         header("Location: ./../../public/index.php");
