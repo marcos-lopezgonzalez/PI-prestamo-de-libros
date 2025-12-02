@@ -38,17 +38,19 @@ if ($email === "") {
     $errores["email"] = "Email vacío";
 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errores["email"] = "Email no válido";
+} else if (existeEmail($email)) {
+    $errores["existeEmail"] = "El email $email ya está registrado";
 } else {
     $recordar["email"] = $email;
 }
-//Falta comprobar si existe email
 
 if ($username === "") {
     $errores["username"] = "Usuario vacío";
+} else if (existeUsuario($username)) {
+    $errores["existeUsername"] = "El usuario $username no está disponible";
 } else {
     $recordar["username"] = $username;
 }
-//Falta comprobar si existe usuario
 
 if ($password === "") {
     $errores["password"] = "Contraseña vacía";

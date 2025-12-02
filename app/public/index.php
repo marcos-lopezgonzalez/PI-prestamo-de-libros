@@ -137,15 +137,32 @@ if (isset($_SESSION["recordar"]))
         </div>
     </main>
 
-    <?php if (isset($_SESSION["creacion"]) || isset($_SESSION["errores"])): ?>
-        <div id="popup" class="fixed top-5 right-5 z-50 max-w-xs w-full p-4 rounded-lg shadow-lg text-white
-    <?= isset($_SESSION["creacion"]) ? 'bg-emerald-500' : 'bg-red-500' ?>">
+    <?php
+    if (isset($_SESSION["creacion"]) || isset($_SESSION["errores"])):
+
+        // Determinar el color del popup
+        if (isset($_SESSION["creacion"])) {
+            $popupColor = 'bg-emerald-500';
+        } else {
+            $popupColor = 'bg-red-500';
+        }
+
+        // Determinar el mensaje a mostrar
+        if (isset($_SESSION["creacion"])) {
+            $popupMensaje = '¡Usuario creado correctamente!';
+        } else if (isset($_SESSION["errores"]["creacion"])) {
+            $popupMensaje = 'Error al intentar registro';
+        } else if (!empty($_SESSION["errores"]["existeUsername"])) {
+            $popupMensaje = 'El nombre de usuario ya existe';
+        } else if (!empty($_SESSION["errores"]["existeEmail"])) {
+            $popupMensaje = 'El correo electrónico ya existe';
+        } else {
+            $popupMensaje = 'Verifica los campos';
+        }
+    ?>
+        <div id="popup" class="fixed top-5 right-5 z-50 max-w-xs w-full p-4 rounded-lg shadow-lg text-white <?= $popupColor ?>">
             <div class="flex justify-between items-center">
-                <p class="text-sm">
-                    <?= isset($_SESSION["creacion"]) ?
-                        '¡Usuario creado correctamente!' : (isset($_SESSION["errores"]["creacion"]) ?
-                            'Error al intentar registro' : 'Verifica los campos') ?>
-                </p>
+                <p class="text-sm"><?= $popupMensaje ?></p>
                 <button id="popup-close" class="ml-4 font-bold">×</button>
             </div>
         </div>
@@ -155,7 +172,9 @@ if (isset($_SESSION["recordar"]))
         </script>
 
     <?php
-    endif; ?>
+    endif;
+    ?>
+
 
 </body>
 
