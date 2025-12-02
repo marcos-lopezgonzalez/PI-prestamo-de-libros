@@ -31,4 +31,19 @@ class BBDD
     {
         return $this->conectado;
     }
+
+    //Metodo para realizar consultas
+    //El parámetro $sql es una cadena que contiene la consulta
+    //El parámetro $parametros contiene los datos que se bindearán en la consulta
+    public function getData($sql, array $parametros = []): PDOStatement | null
+    {
+        try {
+            $sentencia = $this->conexionPDO->prepare($sql);
+            $sentencia->execute($parametros);
+            return $sentencia;
+        } catch (PDOException $e) {
+            // echo $e->getMessage();
+            return null;
+        }
+    }
 }
