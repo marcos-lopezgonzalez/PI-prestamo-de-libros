@@ -1,12 +1,20 @@
 <?php
 
+namespace App\models;
+
+require __DIR__ . "/../../vendor/autoload.php";
+
+use PDO;
+use PDOException;
+use PDOStatement;
+
 class BBDD
 {
     private PDO | null $conexionPDO;
     private bool $conectado;
     public function __construct()
     {
-        $configPath = __DIR__ . "/../config-db.json";
+        $configPath = __DIR__ . "/../config/config-db.json";
         $config = json_decode(file_get_contents($configPath), true);
 
         $dbMotor = $config["dbMotor"];
@@ -43,6 +51,24 @@ class BBDD
             return $sentencia;
         } catch (PDOException $e) {
             // echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function addUser($_usuario)
+    {
+        $sql = "INSERT INTO usuario (nombre, apellidos, email, username, password) VALUES (:nombre, :apellidos, :email, :username, :password)";
+        try {
+            $sentencia = $this->conexionPDO->prepare($sql);
+            $sentencia->bindParam(":nombre", $_usuario->nombre);
+            $sentencia->bindParam(":apellidos", $_usuario->apellidos);
+            $sentencia->bindParam(":email", $_usuario->email);
+            $sentencia->bindParam(":username", $_usuario->username);
+            $sentencia->bindParam(":password", $_usuario->password);
+            $sentencia->execute();
+            return true;
+        } catch (PDOException $e) {
+
             return null;
         }
     }
