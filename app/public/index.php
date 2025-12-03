@@ -90,15 +90,15 @@ if (isset($_SESSION["recordar"]))
                                 <div>
                                     <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
                                     <input id="nombre" name="nombre" <?= !empty($recordar["nombre"]) ? 'value="' . htmlspecialchars($recordar["nombre"]) . '"' : "" ?> type="text" placeholder="Nombre" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
-                                    <?php if (!empty($errores['nombreRegistro'])): ?>
-                                        <p class="text-red-500 text-sm mt-1"><?= $errores['nombreRegistro'] ?></p>
+                                    <?php if (!empty($errores['nombre'])): ?>
+                                        <p class="text-red-500 text-sm mt-1"><?= $errores['nombre'] ?></p>
                                     <?php endif; ?>
                                 </div>
                                 <div>
                                     <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
                                     <input id="apellidos" name="apellidos" <?= !empty($recordar["apellidos"]) ? 'value="' . htmlspecialchars($recordar["apellidos"]) . '"' : "" ?> type="text" placeholder="Apellidos" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
-                                    <?php if (!empty($errores['apellidosRegistro'])): ?>
-                                        <p class="text-red-500 text-sm mt-1"><?= $errores['apellidosRegistro'] ?></p>
+                                    <?php if (!empty($errores['apellidos'])): ?>
+                                        <p class="text-red-500 text-sm mt-1"><?= $errores['apellidos'] ?></p>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -106,14 +106,14 @@ if (isset($_SESSION["recordar"]))
                             <div>
                                 <label for="reg-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                                 <input id="reg-email" name="email" <?= !empty($recordar["email"]) ? 'value="' . htmlspecialchars($recordar["email"]) . '"' : "" ?> placeholder="Email" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
-                                <?php if (!empty($errores['emailRegistro'])): ?>
-                                    <p class="text-red-500 text-sm mt-1"><?= $errores['emailRegistro'] ?></p>
+                                <?php if (!empty($errores['email'])): ?>
+                                    <p class="text-red-500 text-sm mt-1"><?= $errores['email'] ?></p>
                                 <?php endif; ?>
                             </div>
 
                             <div>
                                 <label for="reg-username" class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
-                                <input id="reg-username" name="username" <?= !empty($recordar["username"]) ? 'value="' . htmlspecialchars($recordar["username"]) . '"' : "" ?> placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <input id="reg-username" name="username" <?= !empty($recordar["usernameRegistro"]) ? 'value="' . htmlspecialchars($recordar["usernameRegistro"]) . '"' : "" ?> placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
                                 <?php if (!empty($errores['usernameRegistro'])): ?>
                                     <p class="text-red-500 text-sm mt-1"><?= $errores['usernameRegistro'] ?></p>
                                 <?php endif; ?>
@@ -121,7 +121,7 @@ if (isset($_SESSION["recordar"]))
 
                             <div>
                                 <label for="reg-password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-                                <input id="reg-password" name="password" <?= !empty($recordar["password"]) ? 'value="' . htmlspecialchars($recordar["password"]) . '"' : "" ?> type="password" placeholder="Mínimo 8 caracteres" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <input id="reg-password" name="password" <?= !empty($recordar["passwordRegistro"]) ? 'value="' . htmlspecialchars($recordar["passwordRegistro"]) . '"' : "" ?> type="password" placeholder="Mínimo 8 caracteres" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
                                 <?php if (!empty($errores['passwordRegistro'])): ?>
                                     <p class="text-red-500 text-sm mt-1"><?= $errores['passwordRegistro'] ?></p>
                                 <?php endif; ?>
