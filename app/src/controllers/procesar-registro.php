@@ -23,23 +23,23 @@ $errores = [];
 $db = new BBDD();
 
 if ($nombre === "") {
-    $errores["nombreRegistro"] = "Nombre vacío";
+    $errores["nombre"] = "Nombre vacío";
 } else {
     $recordar["nombre"] = $nombre;
 }
 
 if ($apellidos === "") {
-    $errores["apellidosRegistro"] = "Apellidos vacíos";
+    $errores["apellidos"] = "Apellidos vacíos";
 } else {
     $recordar["apellidos"] = $apellidos;
 }
 
 if ($email === "") {
-    $errores["emailRegistro"] = "Email vacío";
+    $errores["email"] = "Email vacío";
 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errores["emailRegistro"] = "Email no válido";
+    $errores["email"] = "Email no válido";
 } else if (existeEmail($email)) {
-    $errores["emailRegistro"] = "El email $email ya está registrado";
+    $errores["email"] = "El email $email ya está registrado";
 } else {
     $recordar["email"] = $email;
 }
@@ -49,7 +49,7 @@ if ($username === "") {
 } else if (existeUsuario($username)) {
     $errores["usernameRegistro"] = "El usuario $username no está disponible";
 } else {
-    $recordar["username"] = $username;
+    $recordar["usernameRegistro"] = $username;
 }
 
 if ($password === "") {
@@ -57,7 +57,7 @@ if ($password === "") {
 } else if (strlen($password) < 8) {
     $errores["passwordRegistro"] = "Contraseña inferior a 8 caracteres";
 } else {
-    $recordar["password"] = $password;
+    $recordar["passwordRegistro"] = $password;
 }
 
 if (count($errores) !== 0) {
