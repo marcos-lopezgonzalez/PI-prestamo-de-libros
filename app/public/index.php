@@ -175,9 +175,13 @@ if (isset($_SESSION["recordar"]))
     <script>
         alternarVista();
     </script>
+<?php endif; ?>
+
 <?php
+if (isset($_SESSION["errores"]))
     unset($_SESSION["errores"]);
+if (isset($_SESSION["recordar"]))
     unset($_SESSION["recordar"]);
+if (isset($_SESSION["creacion"]))
     unset($_SESSION["creacion"]);
-endif;
 ?>
