@@ -63,17 +63,20 @@ if ($password === "") {
 if (count($errores) !== 0) {
     $_SESSION["errores"] = $errores;
     $_SESSION["recordar"] = $recordar;
+    $_SESSION["last_form"] = "registro";
     header("Location: ./../../public/index.php");
     die;
 } else {
     $usuario = new Usuario(null, $nombre, $apellidos, $email, $username, password_hash($password, PASSWORD_DEFAULT));
     if ($db->addUser($usuario)) {
         $_SESSION["creacion"] = true;
+        $_SESSION["last_form"] = "login";
         header("Location: ./../../public/index.php");
         die;
     } else {
         $_SESSION["errores"]["creacion"] = "Error al crear registro";
         $_SESSION["recordar"] = $recordar;
+        $_SESSION["last_form"] = "registro";
         header("Location: ./../../public/index.php");
         die;
     }

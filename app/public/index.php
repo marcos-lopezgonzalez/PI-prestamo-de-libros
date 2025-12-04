@@ -6,6 +6,11 @@ if (isset($_SESSION["errores"]))
 
 if (isset($_SESSION["recordar"]))
     $recordar = $_SESSION["recordar"];
+
+if (isset($_COOKIE["usernameLogin"]) && isset($_COOKIE["passwordLogin"])) {
+    $usernameLogin = $_COOKIE["usernameLogin"];
+    $passwordLogin = $_COOKIE["passwordLogin"];
+}
 ?>
 
 <!DOCTYPE html>
@@ -49,12 +54,12 @@ if (isset($_SESSION["recordar"]))
                         <form class="space-y-4" action="./../src/controllers/procesar-login.php" method="post">
                             <div>
                                 <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
-                                <input id="username" name="username" type="text" placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <input id="username" name="username" <?= !empty($usernameLogin) ? 'value="' . htmlspecialchars($usernameLogin) . '"' : "" ?> type="text" placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
                             </div>
 
                             <div>
                                 <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-                                <input id="password" name="password" type="password" placeholder="********" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <input id="password" name="password" <?= !empty($passwordLogin) ? 'value="' . htmlspecialchars($passwordLogin) . '"' : "" ?> type="password" placeholder="********" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
                             </div>
 
                             <div class="flex items-center justify-between text-sm">
@@ -151,7 +156,9 @@ if (isset($_SESSION["recordar"]))
         if (isset($_SESSION["creacion"])) {
             $popupMensaje = '¡Usuario creado correctamente!';
         } else if (isset($_SESSION["errores"]["creacion"])) {
-            $popupMensaje = 'Error al intentar registro';
+            $popupMensaje = $_SESSION["errores"]["creacion"];
+        } else if (isset($_SESSION["errores"]["login"])) {
+            $popupMensaje = $_SESSION["errores"]["login"];
         } else {
             $popupMensaje = 'Verifica los campos';
         }
@@ -171,9 +178,19 @@ if (isset($_SESSION["recordar"]))
 </html>
 <script src="./js/tailwind.js"></script>
 <script src="./js/index.js"></script>
-<?php if (!empty($errores)): ?>
+<?php if (isset($_SESSION["last_form"]) && $_SESSION["last_form"] === "login"): ?>
     <script>
-        alternarVista();
+        showLogin();
+    </script>
+
+<?php elseif (isset($_SESSION["last_form"]) && $_SESSION["last_form"] === "registro"): ?>
+    <script>
+        showRegister();
+    </script>
+
+<?php else: ?>
+    <script>
+        showLogin();
     </script>
 <?php endif; ?>
 
@@ -184,4 +201,6 @@ if (isset($_SESSION["recordar"]))
     unset($_SESSION["recordar"]);
 if (isset($_SESSION["creacion"]))
     unset($_SESSION["creacion"]);
+if (isset($_SESSION["last_form"]))
+    unset($_SESSION["last_form"]);
 ?>

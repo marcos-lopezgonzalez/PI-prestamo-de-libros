@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 $username = trim($_POST["username"]) ?? "";
 $password = trim($_POST["password"]) ?? "";
-$noRecordarLogin = $_POST["recordar"] ?? true;
+$recordarLogin = isset($_POST["recordar"]);
 
 $errores = [];
 
@@ -30,32 +30,30 @@ if ($password === "") {
 if (count($errores) !== 0) {
     $_SESSION["errores"] = $errores;
     $_SESSION["recordar"] = $recordar;
+    $_SESSION["last_form"] = "login";
     header("Location: ./../../public/index.php");
     die;
 } else {
     $login = procesarLogin($username, $password);
     if ($login) {
         $_SESSION["login"] = true;
-        if (!$noRecordarLogin) {
+        if ($recordarLogin) {
             setcookie("usernameLogin", $username, time() + (7 * 24 * 60 * 60), "/");
             setcookie("passwordLogin", $password, time() + (7 * 24 * 60 * 60), "/");
         }
-        // header("Location: ./../../public/index.php");
-        // die;
+        header("Location: ./../views/main.php");
+        die;
     } else if ($login === null) {
         $_SESSION["errores"]["login"] = "Error al procesar login. Inténtelo en un rato de nuevo.";
         $_SESSION["recordar"] = $recordar;
-        // header("Location: ./../../public/index.php");
-        // die;
+        $_SESSION["last_form"] = "login";
+        header("Location: ./../../public/index.php");
+        die;
     } else {
         $_SESSION["errores"]["login"] = "Error. Verifica las credenciales.";
         $_SESSION["recordar"] = $recordar;
-        // header("Location: ./../../public/index.php");
-        // die;
+        $_SESSION["last_form"] = "login";
+        header("Location: ./../../public/index.php");
+        die;
     }
-
-    echo ($_SESSION["login"]);
-    var_dump($_SESSION["errores"]);
-    var_dump($_SESSION["recordar"]);
-    die;
 }
