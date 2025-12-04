@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+if (isset($_SESSION["errores"]))
+    $errores = $_SESSION["errores"];
+
+if (isset($_SESSION["recordar"]))
+    $recordar = $_SESSION["recordar"];
+
+if (isset($_COOKIE["usernameLogin"]) && isset($_COOKIE["passwordLogin"])) {
+    $usernameLogin = $_COOKIE["usernameLogin"];
+    $passwordLogin = $_COOKIE["passwordLogin"];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -39,12 +54,12 @@
                         <form class="space-y-4" action="./../src/controllers/procesar-login.php" method="post">
                             <div>
                                 <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
-                                <input id="username" name="username" type="text" placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <input id="username" name="username" <?= !empty($usernameLogin) ? 'value="' . htmlspecialchars($usernameLogin) . '"' : "" ?> type="text" placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
                             </div>
 
                             <div>
                                 <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-                                <input id="password" name="password" type="password" placeholder="********" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <input id="password" name="password" <?= !empty($passwordLogin) ? 'value="' . htmlspecialchars($passwordLogin) . '"' : "" ?> type="password" placeholder="********" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
                             </div>
 
                             <div class="flex items-center justify-between text-sm">
@@ -79,22 +94,42 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
                                     <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                                    <input id="nombre" name="nombre" type="text" placeholder="Nombre" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                    <input id="nombre" name="nombre" <?= !empty($recordar["nombre"]) ? 'value="' . htmlspecialchars($recordar["nombre"]) . '"' : "" ?> type="text" placeholder="Nombre" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                    <?php if (!empty($errores['nombre'])): ?>
+                                        <p class="text-red-500 text-sm mt-1"><?= $errores['nombre'] ?></p>
+                                    <?php endif; ?>
                                 </div>
                                 <div>
                                     <label for="apellidos" class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
-                                    <input id="apellidos" name="apellidos" type="text" placeholder="Apellidos" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                    <input id="apellidos" name="apellidos" <?= !empty($recordar["apellidos"]) ? 'value="' . htmlspecialchars($recordar["apellidos"]) . '"' : "" ?> type="text" placeholder="Apellidos" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                    <?php if (!empty($errores['apellidos'])): ?>
+                                        <p class="text-red-500 text-sm mt-1"><?= $errores['apellidos'] ?></p>
+                                    <?php endif; ?>
                                 </div>
+                            </div>
+
+                            <div>
+                                <label for="reg-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input id="reg-email" name="email" <?= !empty($recordar["email"]) ? 'value="' . htmlspecialchars($recordar["email"]) . '"' : "" ?> placeholder="Email" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <?php if (!empty($errores['email'])): ?>
+                                    <p class="text-red-500 text-sm mt-1"><?= $errores['email'] ?></p>
+                                <?php endif; ?>
                             </div>
 
                             <div>
                                 <label for="reg-username" class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
-                                <input id="reg-username" name="username" placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <input id="reg-username" name="username" <?= !empty($recordar["usernameRegistro"]) ? 'value="' . htmlspecialchars($recordar["usernameRegistro"]) . '"' : "" ?> placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <?php if (!empty($errores['usernameRegistro'])): ?>
+                                    <p class="text-red-500 text-sm mt-1"><?= $errores['usernameRegistro'] ?></p>
+                                <?php endif; ?>
                             </div>
 
                             <div>
                                 <label for="reg-password" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-                                <input id="reg-password" name="password" type="password" placeholder="Mínimo 8 caracteres" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <input id="reg-password" name="password" <?= !empty($recordar["passwordRegistro"]) ? 'value="' . htmlspecialchars($recordar["passwordRegistro"]) . '"' : "" ?> type="password" placeholder="Mínimo 8 caracteres" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
+                                <?php if (!empty($errores['passwordRegistro'])): ?>
+                                    <p class="text-red-500 text-sm mt-1"><?= $errores['passwordRegistro'] ?></p>
+                                <?php endif; ?>
                             </div>
 
                             <div>
@@ -106,8 +141,66 @@
             </aside>
         </div>
     </main>
+
+    <?php
+    if (isset($_SESSION["creacion"]) || isset($_SESSION["errores"])):
+
+        // Determinar el color del popup
+        if (isset($_SESSION["creacion"])) {
+            $popupColor = 'bg-emerald-500';
+        } else {
+            $popupColor = 'bg-red-500';
+        }
+
+        // Determinar el mensaje a mostrar
+        if (isset($_SESSION["creacion"])) {
+            $popupMensaje = '¡Usuario creado correctamente!';
+        } else if (isset($_SESSION["errores"]["creacion"])) {
+            $popupMensaje = $_SESSION["errores"]["creacion"];
+        } else if (isset($_SESSION["errores"]["login"])) {
+            $popupMensaje = $_SESSION["errores"]["login"];
+        } else {
+            $popupMensaje = 'Verifica los campos';
+        }
+    ?>
+        <div id="popup" class="fixed top-5 right-5 z-50 max-w-xs w-full p-4 rounded-lg shadow-lg text-white <?= $popupColor ?>">
+            <div class="flex justify-between items-center">
+                <p class="text-sm"><?= $popupMensaje ?></p>
+                <button id="popup-close" class="ml-4 font-bold">×</button>
+            </div>
+        </div>
+
+    <?php endif; ?>
+
+
 </body>
 
 </html>
 <script src="./js/tailwind.js"></script>
 <script src="./js/index.js"></script>
+<?php if (isset($_SESSION["last_form"]) && $_SESSION["last_form"] === "login"): ?>
+    <script>
+        showLogin();
+    </script>
+
+<?php elseif (isset($_SESSION["last_form"]) && $_SESSION["last_form"] === "registro"): ?>
+    <script>
+        showRegister();
+    </script>
+
+<?php else: ?>
+    <script>
+        showLogin();
+    </script>
+<?php endif; ?>
+
+<?php
+if (isset($_SESSION["errores"]))
+    unset($_SESSION["errores"]);
+if (isset($_SESSION["recordar"]))
+    unset($_SESSION["recordar"]);
+if (isset($_SESSION["creacion"]))
+    unset($_SESSION["creacion"]);
+if (isset($_SESSION["last_form"]))
+    unset($_SESSION["last_form"]);
+?>

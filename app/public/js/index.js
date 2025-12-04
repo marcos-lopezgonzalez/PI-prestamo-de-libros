@@ -1,5 +1,3 @@
-// Script de interacción mínima: alternar tabs (sin dependencias)
-
 const tabLogin = document.getElementById("tab-login");
 const tabRegister = document.getElementById("tab-register");
 const panelLogin = document.getElementById("panel-login");
@@ -28,3 +26,21 @@ tabRegister.addEventListener("click", showRegister);
 
 // Inicial: login visible
 showLogin();
+
+document.addEventListener("DOMContentLoaded", () => {
+  mostrarPopup();
+});
+
+function mostrarPopup() {
+  const popup = document.getElementById("popup");
+  if (!popup) return;
+
+  const closeBtn = document.getElementById("popup-close");
+
+  // Cerrar al pulsar la X
+  closeBtn.addEventListener("click", () => popup.remove());
+
+  // Desaparece automáticamente tras 5 segundos
+  setTimeout(() => popup.remove(), 5000);
+}
+
