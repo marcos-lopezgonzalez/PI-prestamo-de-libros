@@ -27,15 +27,6 @@ tabRegister.addEventListener("click", showRegister);
 // Inicial: login visible
 showLogin();
 
-function alternarVista() {
-  // Aseguramos que la función showRegister ya esté definida (index.js)
-  if (typeof showRegister === "function") {
-    showRegister();
-  } else if (typeof showLogin === "function") {
-    showLogin();
-  }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   mostrarPopup();
 });

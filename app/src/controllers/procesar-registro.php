@@ -45,35 +45,38 @@ if ($email === "") {
 }
 
 if ($username === "") {
-    $errores["username"] = "Usuario vacío";
+    $errores["usernameRegistro"] = "Usuario vacío";
 } else if (existeUsuario($username)) {
-    $errores["username"] = "El usuario $username no está disponible";
+    $errores["usernameRegistro"] = "El usuario $username no está disponible";
 } else {
-    $recordar["username"] = $username;
+    $recordar["usernameRegistro"] = $username;
 }
 
 if ($password === "") {
-    $errores["password"] = "Contraseña vacía";
+    $errores["passwordRegistro"] = "Contraseña vacía";
 } else if (strlen($password) < 8) {
-    $errores["password"] = "Contraseña inferior a 8 caracteres";
+    $errores["passwordRegistro"] = "Contraseña inferior a 8 caracteres";
 } else {
-    $recordar["password"] = $password;
+    $recordar["passwordRegistro"] = $password;
 }
 
 if (count($errores) !== 0) {
     $_SESSION["errores"] = $errores;
     $_SESSION["recordar"] = $recordar;
+    $_SESSION["last_form"] = "registro";
     header("Location: ./../../public/index.php");
     die;
 } else {
     $usuario = new Usuario(null, $nombre, $apellidos, $email, $username, password_hash($password, PASSWORD_DEFAULT));
     if ($db->addUser($usuario)) {
         $_SESSION["creacion"] = true;
+        $_SESSION["last_form"] = "login";
         header("Location: ./../../public/index.php");
         die;
     } else {
         $_SESSION["errores"]["creacion"] = "Error al crear registro";
         $_SESSION["recordar"] = $recordar;
+        $_SESSION["last_form"] = "registro";
         header("Location: ./../../public/index.php");
         die;
     }
