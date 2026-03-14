@@ -1,10 +1,6 @@
 <?php 
 require __DIR__ . "/../../vendor/autoload.php";
 
-session_start();
-$libros = librosUsuario($_SESSION["username"]);
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +12,12 @@ $libros = librosUsuario($_SESSION["username"]);
     
 </head>
 <body class="min-h-screen bg-slate-100">
-    <?php include __DIR__ . "/layout/header.php" ?>
+    <?php 
+    include __DIR__ . "/layout/header.php"; 
+    $libros = librosUsuario($_SESSION["username"]);
+
+    ?>
+    
     <main class="max-w-6xl mx-auto px-4 py-12">
         <h1 class="text-2xl font-bold text-slate-800 mb-6">Mis libros</h1>
 
