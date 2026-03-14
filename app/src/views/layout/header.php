@@ -32,7 +32,8 @@ session_start();
     </div>
 
     <div class="header__user">
-        <span>Hola, <?= $_SESSION["username"]  ?></span>
+        <span>Hola, <?= htmlspecialchars($_SESSION["username"]) ?></span>
+        <a href="./../controllers/logout.php" class="logout-button">Cerrar sesión</a>
     </div>
 </header>
 </body>

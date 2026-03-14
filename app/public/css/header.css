@@ -59,3 +59,16 @@
     height: 35px;
     border-radius: 50%;
 }
+
+.logout-button {
+    margin-left: 1rem;
+    padding: 0.4rem 0.8rem;
+    background-color: #e53e3e;
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.logout-button:hover {
+    background-color: #c53030;
+}

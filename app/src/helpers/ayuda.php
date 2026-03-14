@@ -49,3 +49,15 @@ function procesarLogin($_username, $_password)
 function estaUsuarioLogeado() {
     return $_SESSION["username"];
 }
+
+function cerrarSesion()
+{
+    if (isset($_SESSION["username"])) {
+        unset($_SESSION["username"]);
+    }
+
+    session_unset();
+    session_destroy();
+    header("Location: ./../../public/index.php");
+    exit();
+}
