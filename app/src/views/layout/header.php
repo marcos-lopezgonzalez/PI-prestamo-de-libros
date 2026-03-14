@@ -24,6 +24,7 @@ if (!estaUsuarioLogeado()) {
     </div>
 
     <!-- Buscador centrado -->
+    <!--
     <div class="flex items-center gap-2 flex-none mx-4 w-full max-w-md">
         <input
             type="text"
@@ -41,6 +42,7 @@ if (!estaUsuarioLogeado()) {
             🔍
         </button>
     </div>
+    -->
 
     <!-- Usuario / Logout -->
     <div class="flex items-center justify-end gap-3 flex-1">
