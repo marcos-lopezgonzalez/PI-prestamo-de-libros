@@ -37,6 +37,7 @@ if (count($errores) !== 0) {
     $login = procesarLogin($username, $password);
     if ($login) {
         $_SESSION["login"] = true;
+        $_SESSION["username"] = $username;
         if ($recordarLogin) {
             setcookie("usernameLogin", $username, time() + (7 * 24 * 60 * 60), "/");
             setcookie("passwordLogin", $password, time() + (7 * 24 * 60 * 60), "/");
