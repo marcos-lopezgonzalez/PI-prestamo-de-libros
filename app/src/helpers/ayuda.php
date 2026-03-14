@@ -45,3 +45,7 @@ function procesarLogin($_username, $_password)
 
     return password_verify($_password, $hash);
 }
+
+function estaUsuarioLogeado() {
+    return $_SESSION["username"];
+}
