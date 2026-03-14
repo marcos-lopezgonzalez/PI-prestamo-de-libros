@@ -4,37 +4,58 @@ require __DIR__ . "/../../../vendor/autoload.php";
 
 session_start();
 
-    if(!estaUsuarioLogeado()) {
-        header("Location: ./../../public/index.php");
-    }
-
+if (!estaUsuarioLogeado()) {
+    header("Location: ./../../public/index.php");
+    exit();
+}
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header</title>
-    <link rel="stylesheet" href="./../../public/css/index.css">
-    <link rel="stylesheet" href="./../../public/css/header.css">
-</head>
-<body>
-    <header class="header">
-    <div class="header__logo">
-        <img src="./../../public/img/logo.png" alt="Logo">
-        
+<header class="flex items-center justify-center px-5 py-3 bg-slate-800 text-white shadow-md">
+    <!-- Logo -->
+    <div class="flex items-center gap-3 flex-1">
+        <img
+            src="./../../public/img/logo.png"
+            alt="Logo PrestameLo"
+            class="w-9 h-9"
+        >
+        <span class="hidden sm:inline text-sm font-semibold tracking-wide text-slate-100">
+            PRESTAMELO
+        </span>
     </div>
 
-    <div class="header__search">
-        <input type="text" placeholder="Buscar libros...">
-        <button>🔍</button>
+    <!-- Buscador centrado -->
+    <div class="flex items-center gap-2 flex-none mx-4 w-full max-w-md">
+        <input
+            type="text"
+            placeholder="Buscar libros..."
+            class="w-full rounded-full border border-slate-300/70 bg-white/90 px-4 py-2 text-sm text-slate-800
+                   placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400
+                   focus:border-transparent"
+        >
+        <button
+            class="inline-flex items-center justify-center rounded-full bg-sky-500 px-3 py-2 text-white
+                   shadow-sm hover:bg-sky-600 focus-visible:outline-none focus-visible:ring-2
+                   focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800
+                   transition"
+        >
+            🔍
+        </button>
     </div>
 
-    <div class="header__user">
-        <span>Hola, <?= htmlspecialchars($_SESSION["username"]) ?></span>
-        <a href="./../controllers/logout.php" class="logout-button">Cerrar sesión</a>
+    <!-- Usuario / Logout -->
+    <div class="flex items-center justify-end gap-3 flex-1">
+        <span class="hidden sm:inline text-sm text-slate-100">
+            Hola, <span class="font-semibold"><?= htmlspecialchars($_SESSION["username"]) ?></span>
+        </span>
+
+        <a
+            href="./../controllers/logout.php"
+            class="inline-flex items-center justify-center rounded-lg bg-red-500 px-4 py-2 text-sm font-medium
+                   text-white shadow-sm hover:bg-red-600 focus-visible:outline-none focus-visible:ring-2
+                   focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800
+                   transition"
+        >
+            Cerrar sesión
+        </a>
     </div>
 </header>
-</body>
-</html>
