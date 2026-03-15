@@ -1,8 +1,8 @@
 <?php
-
+session_start();
 require __DIR__ . "/../../../vendor/autoload.php";
 
-session_start();
+
 
 if (!estaUsuarioLogeado()) {
     header("Location: ./../../public/index.php");
@@ -12,6 +12,7 @@ if (!estaUsuarioLogeado()) {
 
 <header class="flex items-center justify-center px-5 py-3 bg-slate-800 text-white shadow-md">
     <!-- Logo -->
+    <a href="./main.php" class="gap-3 flex items-center">
     <div class="flex items-center gap-3 flex-1">
         <img
             src="./../../public/img/logo.png"
@@ -21,6 +22,7 @@ if (!estaUsuarioLogeado()) {
         <span class="hidden sm:inline text-sm font-semibold tracking-wide text-slate-100">
             PRESTAMELO
         </span>
+    </a>
     </div>
 
     <!-- Buscador centrado -->

@@ -61,3 +61,14 @@ function cerrarSesion()
     header("Location: ./../../public/index.php");
     exit();
 }
+
+function librosUsuario($_username)
+{
+    $db = new BBDD();
+    $sql = "SELECT * FROM libro INNER JOIN usuario ON id_usuario = usuario.id WHERE usuario.username = :username";
+    $parametros = [
+        "username" => $_username
+    ];
+
+    return $db->getData($sql, $parametros)->fetchAll(PDO::FETCH_ASSOC);
+}
