@@ -45,6 +45,9 @@ class BBDD
     //El parámetro $parametros contiene los datos que se bindearán en la consulta
     public function getData($sql, array $parametros = []): PDOStatement | null
     {
+        if (!$this->isConectado() || $this->conexionPDO === null) {
+            return null;
+        }
         try {
             $sentencia = $this->conexionPDO->prepare($sql);
             $sentencia->execute($parametros);
@@ -57,6 +60,10 @@ class BBDD
 
     public function addUser($_usuario)
     {
+        if (!$this->isConectado() || $this->conexionPDO === null) {
+            return null;
+        }
+
         $sql = "INSERT INTO usuario (nombre, apellidos, email, username, password) VALUES (:nombre, :apellidos, :email, :username, :password)";
         try {
             $sentencia = $this->conexionPDO->prepare($sql);
