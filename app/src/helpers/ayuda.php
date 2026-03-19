@@ -12,6 +12,9 @@ function existeUsuario($_username)
         "username" => $_username
     ];
     $sentencia = $db->getData($sql, $parametros);
+    if ($sentencia === null) {
+        return false; // BD caída => tratamos como "no existe" para no reventar
+    }
     $count = $sentencia->fetchColumn();
     return $count > 0;
 }
@@ -24,6 +27,9 @@ function existeEmail($_email)
         "email" => $_email
     ];
     $sentencia = $db->getData($sql, $parametros);
+    if ($sentencia === null) {
+        return false; // BD caída => no reventar
+    }
     $count = $sentencia->fetchColumn();
     return $count > 0;
 }
@@ -37,8 +43,11 @@ function procesarLogin($_username, $_password)
     ];
 
     $sentencia = $db->getData($sql, $parametros);
-    $hash = $sentencia->fetchColumn();
+    if ($sentencia === null) {
+        return null; // MySQL apagado => que el controller muestre "Inténtelo en un rato"
+    }
 
+    $hash = $sentencia->fetchColumn();
     if ($hash === false) {
         return false;
     }
@@ -46,7 +55,8 @@ function procesarLogin($_username, $_password)
     return password_verify($_password, $hash);
 }
 
-function estaUsuarioLogeado() {
+function estaUsuarioLogeado()
+{
     return $_SESSION["username"];
 }
 
@@ -70,5 +80,10 @@ function librosUsuario($_username)
         "username" => $_username
     ];
 
-    return $db->getData($sql, $parametros)->fetchAll(PDO::FETCH_ASSOC);
+    $sentencia = $db->getData($sql, $parametros);
+    if ($sentencia === null) {
+        return [];
+    }
+
+    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
