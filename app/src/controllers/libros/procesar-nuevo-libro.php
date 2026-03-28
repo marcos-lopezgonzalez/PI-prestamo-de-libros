@@ -62,7 +62,7 @@ $resultado = $db->addBook($titulo, $autor, $genero, $anyo, $_SESSION["username"]
 if ($resultado === true) {
     unset($_SESSION["errores_libro"], $_SESSION["recordar_libro"]);
     $_SESSION["libro_creado"] = true;
-    header("Location: ../../views/libros/lista_libros.php");
+    header("Location: ../../views/libros/lista_libros_usuario.php");
     exit;
 }
 
