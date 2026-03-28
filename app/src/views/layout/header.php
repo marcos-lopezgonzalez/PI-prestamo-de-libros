@@ -5,17 +5,17 @@ require __DIR__ . "/../../../vendor/autoload.php";
 
 
 if (!estaUsuarioLogeado()) {
-    header("Location: ./../../public/index.php");
+    header("Location: /pi/PI-prestamo-de-libros/app/public/index.php");
     exit();
 }
 ?>
 
 <header class="flex items-center justify-center px-5 py-3 bg-slate-800 text-white shadow-md">
     <!-- Logo -->
-    <a href="./main.php" class="gap-3 flex items-center">
+    <a href="/pi/PI-prestamo-de-libros/app/src/views/main.php" class="gap-3 flex items-center">
     <div class="flex items-center gap-3 flex-1">
         <img
-            src="./../../public/img/logo.png"
+            src="/pi/PI-prestamo-de-libros/app/public/img/logo.png"
             alt="Logo PrestameLo"
             class="w-9 h-9"
         >
@@ -53,7 +53,7 @@ if (!estaUsuarioLogeado()) {
         </span>
 
         <a
-            href="./../controllers/logout.php"
+            href="/pi/PI-prestamo-de-libros/app/src/controllers/logout.php"
             class="inline-flex items-center justify-center rounded-lg bg-red-500 px-4 py-2 text-sm font-medium
                    text-white shadow-sm hover:bg-red-600 focus-visible:outline-none focus-visible:ring-2
                    focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-800

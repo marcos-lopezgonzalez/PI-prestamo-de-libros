@@ -31,14 +31,14 @@
                     </p>
                 </div>
                 <div class="space-y-2">
-                    <a href="./lista_libros.php"
+                    <a href="./libros/lista_libros.php"
                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-sky-600 px-4 py-2
                               text-sm font-medium text-white hover:bg-sky-700 focus-visible:outline-none
                               focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2
                               focus-visible:ring-offset-white transition">
                         Ver mis libros
                     </a>
-                    <a href="#"
+                    <a href="./libros/nuevo_libro.php"
                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-sky-600
                               px-4 py-2 text-sm font-medium text-sky-700 bg-white hover:bg-sky-50
                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400

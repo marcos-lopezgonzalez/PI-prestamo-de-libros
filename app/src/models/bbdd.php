@@ -79,4 +79,29 @@ class BBDD
             return null;
         }
     }
+
+    public function addBook(string $titulo, string $autor, string $genero, int $anyo, string $username): bool|null
+    {
+        if (!$this->isConectado() || $this->conexionPDO === null) {
+            return null;
+        }
+        $sql = "INSERT INTO libro (titulo, autor, genero, anyo, id_usuario)
+                SELECT :titulo, :autor, :genero, :anyo, u.id
+                FROM usuario u
+                WHERE u.username = :username
+                LIMIT 1";
+        try {
+            $sentencia = $this->conexionPDO->prepare($sql);
+            $sentencia->execute([
+                ":titulo" => $titulo,
+                ":autor" => $autor,
+                ":genero" => $genero,
+                ":anyo" => $anyo,
+                ":username" => $username,
+            ]);
+            return $sentencia->rowCount() > 0;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
 }

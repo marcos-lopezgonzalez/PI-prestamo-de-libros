@@ -1,5 +1,5 @@
 <?php 
-require __DIR__ . "/../../vendor/autoload.php";
+require __DIR__ . "/../../../vendor/autoload.php";
 
 ?>
 <!DOCTYPE html>
@@ -8,12 +8,12 @@ require __DIR__ . "/../../vendor/autoload.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./../../public/css/index.css">
+    <link rel="stylesheet" href="./../../../public/css/index.css">
     
 </head>
 <body class="min-h-screen bg-slate-100">
     <?php 
-    include __DIR__ . "/layout/header.php"; 
+    include __DIR__ . "/../layout/header.php"; 
     $libros = librosUsuario($_SESSION["username"]);
 
     ?>
@@ -50,7 +50,7 @@ require __DIR__ . "/../../vendor/autoload.php";
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        <script src="./../../public/js/tailwind.js"></script></body>    
+        <script src="./../../../public/js/tailwind.js"></script></body>    
 </body>
 
 </html>
