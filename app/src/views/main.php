@@ -62,7 +62,7 @@
                     </p>
                 </div>
                 <div>
-                    <a href="#"
+                    <a href="./libros/lista_libros_disponibles.php"
                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-500
                               px-4 py-2 text-sm font-medium text-white hover:bg-emerald-600
                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400

@@ -87,3 +87,33 @@ function librosUsuario($_username)
 
     return $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function librosDisponiblesParaPrestamo(string $usernameViewer, string $campoFiltro, string $texto): array
+{
+    $db = new BBDD();
+    $allowed = ["titulo", "autor", "genero"];
+    $campo = in_array($campoFiltro, $allowed, true) ? $campoFiltro : "titulo";
+    $texto = trim($texto);
+    $sql = "SELECT libro.id, libro.titulo, libro.autor, libro.genero, libro.anyo,
+                   usuario.username AS propietario_username
+            FROM libro
+            INNER JOIN usuario ON libro.id_usuario = usuario.id
+            WHERE NOT EXISTS (
+                SELECT 1 FROM prestamo p
+                WHERE p.id_libro = libro.id AND p.devuelto = 0
+            )
+            AND usuario.username != :viewer";
+    $parametros = [
+        "viewer" => $usernameViewer,
+    ];
+    if ($texto !== "") {
+        $sql .= " AND libro.$campo LIKE :like";
+        $parametros["like"] = "%" . $texto . "%";
+    }
+    $sql .= " ORDER BY libro.titulo ASC";
+    $sentencia = $db->getData($sql, $parametros);
+    if ($sentencia === null) {
+        return [];
+    }
+    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+}
