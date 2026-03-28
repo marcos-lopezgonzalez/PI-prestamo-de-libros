@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . "/../../../vendor/autoload.php";
+require __DIR__ . "/../../vendor/autoload.php";
 
 use App\models\BBDD;
 use App\models\Usuario;
@@ -8,7 +8,7 @@ use App\models\Usuario;
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: ./../../../public/index.php");
+    header("Location: ./../../public/index.php");
     die;
 }
 
@@ -64,20 +64,20 @@ if (count($errores) !== 0) {
     $_SESSION["errores"] = $errores;
     $_SESSION["recordar"] = $recordar;
     $_SESSION["last_form"] = "registro";
-    header("Location: ./../../../public/index.php");
+    header("Location: ./../../public/index.php");
     die;
 } else {
     $usuario = new Usuario(null, $nombre, $apellidos, $email, $username, password_hash($password, PASSWORD_DEFAULT));
     if ($db->addUser($usuario)) {
         $_SESSION["creacion"] = true;
         $_SESSION["last_form"] = "login";
-        header("Location: ./../../../public/index.php");
+        header("Location: ./../../public/index.php");
         die;
     } else {
         $_SESSION["errores"]["creacion"] = "Error al crear registro";
         $_SESSION["recordar"] = $recordar;
         $_SESSION["last_form"] = "registro";
-        header("Location: ./../../../public/index.php");
+        header("Location: ./../../public/index.php");
         die;
     }
 }

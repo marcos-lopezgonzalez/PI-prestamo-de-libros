@@ -51,7 +51,7 @@ if (isset($_COOKIE["usernameLogin"]) && isset($_COOKIE["passwordLogin"])) {
 
                     <!-- Panel: Login -->
                     <div id="panel-login" role="tabpanel" aria-labelledby="tab-login">
-                        <form class="space-y-4" action="./../src/controllers/auth/procesar-login.php" method="post">
+                        <form class="space-y-4" action="./../src/controllers/procesar-login.php" method="post">
                             <div>
                                 <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
                                 <input id="username" name="username" <?= !empty($usernameLogin) ? 'value="' . htmlspecialchars($usernameLogin) . '"' : "" ?> type="text" placeholder="Usuario" class="block w-full rounded-lg border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-sky-300" />
@@ -90,7 +90,7 @@ if (isset($_COOKIE["usernameLogin"]) && isset($_COOKIE["passwordLogin"])) {
 
                     <!-- Panel: Registro (oculto por defecto) -->
                     <div id="panel-register" role="tabpanel" aria-labelledby="tab-register" class="hidden mt-6">
-                        <form class="space-y-4" action="./../src/controllers/auth/procesar-registro.php" method="post">
+                        <form class="space-y-4" action="./../src/controllers/procesar-registro.php" method="post">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
                                     <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
