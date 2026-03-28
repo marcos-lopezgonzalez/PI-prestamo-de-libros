@@ -104,4 +104,32 @@ class BBDD
             return null;
         }
     }
+
+    public function addPrestamo(int $idLibro, string $usernamePrestatario): bool|null
+    {
+        if (!$this->isConectado() || $this->conexionPDO === null) {
+            return null;
+        }
+        $sql = "INSERT INTO prestamo (fecha_prestamo, fecha_devolucion, id_usuario, id_libro, devuelto)
+                SELECT NOW(), NULL, u.id, l.id, 0
+                FROM libro l
+                INNER JOIN usuario u ON u.username = :username
+                WHERE l.id = :id_libro
+                AND l.id_usuario != u.id
+                AND NOT EXISTS (
+                    SELECT 1 FROM prestamo p
+                    WHERE p.id_libro = l.id AND p.devuelto = 0
+                )
+                LIMIT 1";
+        try {
+            $sentencia = $this->conexionPDO->prepare($sql);
+            $sentencia->execute([
+                ":id_libro" => $idLibro,
+                ":username" => $usernamePrestatario,
+            ]);
+            return $sentencia->rowCount() > 0;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
 }
