@@ -132,4 +132,20 @@ class BBDD
             return null;
         }
     }
+    public function removePrestamo(int $id):bool | null{
+        if (!$this->isConectado() || $this->conexionPDO === null) {
+            return null;
+        }
+        $sql="UPDATE prestamo SET devuelto = 1 WHERE id_libro = :id";
+        try {
+            $sentencia = $this->conexionPDO->prepare($sql);
+            $sentencia->execute([
+                ":id" => $id
+            ]);
+            return $sentencia->rowCount() > 0;
+        } catch (PDOException $e) {
+            return null;
+        }
+
+    }
 }
