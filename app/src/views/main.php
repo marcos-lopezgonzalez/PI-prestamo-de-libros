@@ -94,7 +94,7 @@
                               focus-visible:ring-offset-2 focus-visible:ring-offset-white transition">
                         Libros que me han prestado
                     </a>
-                    <a href="./libros/lista_libros_prestados.php"
+                    <a href="./prestamos/lista_libros_prestados.php"
                        class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-indigo-500
                               px-4 py-2 text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50
                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400
