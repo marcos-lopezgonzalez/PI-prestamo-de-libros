@@ -12,10 +12,10 @@ if (!estaUsuarioLogeado()) {
 
 <header class="flex items-center justify-center px-5 py-3 bg-slate-800 text-white shadow-md">
     <!-- Logo -->
-    <a href="PI/PI-prestamo-de-libros/app/src/views/main.php" class="gap-3 flex items-center">
+    <a href="/pi/PI-prestamo-de-libros/app/src/views/main.php" class="gap-3 flex items-center">
     <div class="flex items-center gap-3 flex-1">
         <img
-            src="PI/PI-prestamo-de-libros/app/public/img/logo.png"
+            src="/pi/PI-prestamo-de-libros/app/public/img/logo.png"
             alt="Logo PrestameLo"
             class="w-9 h-9"
         >

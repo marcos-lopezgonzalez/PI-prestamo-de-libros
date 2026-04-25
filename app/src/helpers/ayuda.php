@@ -134,4 +134,20 @@ function librosRecibidos($username)
     }
     return $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
-
+function librosPrestados($username)
+{
+    $db = new BBDD();
+    $sql = "SELECT libro.*, usuario.username AS receptor_username
+    FROM libro INNER JOIN prestamo ON libro.id = prestamo.id_libro
+     INNER JOIN usuario ON prestamo.id_usuario = usuario.id WHERE 
+     libro.id_usuario = ( SELECT id FROM usuario WHERE username = :username ) 
+     AND prestamo.devuelto = 0";
+    $parametros = [
+        ":username" => $username
+    ];
+    $sentencia = $db->getData($sql, $parametros);
+    if ($sentencia === null) {
+        return [];
+    }
+    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+}
