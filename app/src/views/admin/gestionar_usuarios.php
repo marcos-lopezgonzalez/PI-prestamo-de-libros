@@ -1,10 +1,14 @@
 <?php
 require __DIR__ . "/../../../vendor/autoload.php";
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $usuarios = usuariosAdministracionConPrestamos();
-$ok = $_SESSION["admin"] ?? "";
+$ok = $_SESSION["admin_ok"] ?? "";
 $error = $_SESSION["admin_error"] ?? "";
-unset($_SESSION["admin"], $_SESSION["admin_error"]);
+unset($_SESSION["admin_ok"], $_SESSION["admin_error"]);
 ?>
 <!DOCTYPE html>
 <html lang="es">

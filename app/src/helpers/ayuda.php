@@ -191,11 +191,21 @@ function usuariosAdministracionConPrestamos(): array
 {
     $db = new BBDD();
     $sql = "SELECT u.id, u.nombre, u.apellidos, u.email, u.username, u.role,
-                   COUNT(p.id) AS total_prestamos
-            FROM usuario u
-            LEFT JOIN prestamo p ON p.id_usuario = u.id
-            GROUP BY u.id, u.nombre, u.apellidos, u.email, u.username, u.role
-            ORDER BY u.username ASC";
+               (
+                   SELECT COUNT(*)
+                   FROM prestamo p1
+                   WHERE p1.id_usuario = u.id
+                     AND p1.devuelto = 0
+               ) +
+               (
+                   SELECT COUNT(*)
+                   FROM prestamo p2
+                   INNER JOIN libro l2 ON l2.id = p2.id_libro
+                   WHERE l2.id_usuario = u.id
+                     AND p2.devuelto = 0
+               ) AS total_prestamos
+        FROM usuario u
+        ORDER BY u.username ASC";
     $sentencia = $db->getData($sql);
     if ($sentencia === null) {
         return [];
@@ -207,26 +217,50 @@ function eliminarUsuarioSiSinPrestamos(int $idUsuario, string $adminUsername): b
 {
     $db = new BBDD();
 
-    // Evitar que el admin se borre a sí mismo
     $sqlSelf = "SELECT id FROM usuario WHERE username = :username LIMIT 1";
     $sSelf = $db->getData($sqlSelf, ["username" => $adminUsername]);
     if ($sSelf === null) {
         return null;
     }
+
     $idAdmin = (int)$sSelf->fetchColumn();
     if ($idAdmin === $idUsuario) {
         return "No puedes darte de baja a ti mismo.";
     }
 
-    // Regla del enunciado: no borrar si tiene préstamos
-    $sqlCount = "SELECT COUNT(*) FROM prestamo WHERE id_usuario = :id_usuario";
+    $sqlCount = "SELECT
+                (
+                    SELECT COUNT(*)
+                    FROM prestamo p1
+                    WHERE p1.id_usuario = :id_usuario
+                      AND p1.devuelto = 0
+                ) +
+                (
+                    SELECT COUNT(*)
+                    FROM prestamo p2
+                    INNER JOIN libro l2 ON l2.id = p2.id_libro
+                    WHERE l2.id_usuario = :id_usuario
+                      AND p2.devuelto = 0
+                ) AS total";
     $sCount = $db->getData($sqlCount, ["id_usuario" => $idUsuario]);
     if ($sCount === null) {
         return null;
     }
+
     $totalPrestamos = (int)$sCount->fetchColumn();
     if ($totalPrestamos > 0) {
-        return "No se puede dar de baja: el usuario tiene préstamos registrados.";
+        return "No se puede dar de baja: el usuario tiene préstamos activos (como solicitante o propietario).";
+    }
+
+    // Bloquear baja si el usuario tiene libros registrados (FK libro.id_usuario -> usuario.id)
+    $sqlLibros = "SELECT COUNT(*) FROM libro WHERE id_usuario = :id_usuario";
+    $sLibros = $db->getData($sqlLibros, ["id_usuario" => $idUsuario]);
+    if ($sLibros === null) {
+        return null;
+    }
+    $totalLibros = (int)$sLibros->fetchColumn();
+    if ($totalLibros > 0) {
+        return "No se puede dar de baja: el usuario tiene libros registrados.";
     }
 
     $sqlDelete = "DELETE FROM usuario WHERE id = :id_usuario";
