@@ -1,7 +1,7 @@
 {
     "dbMotor": "mysql",
     "mysqlHost": "127.0.0.1",
-    "mysqlUser": "admin",
-    "mysqlPassword": "admin",
+    "mysqlUser": "root",
+    "mysqlPassword": "",
     "mysqlDatabase": "prestamo_libros"
 }
