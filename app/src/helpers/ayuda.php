@@ -117,6 +117,7 @@ function librosDisponiblesParaPrestamo(string $usernameViewer, string $campoFilt
     }
     return $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
+
 function librosRecibidos($username)
 {
     $db = new BBDD();
@@ -134,6 +135,7 @@ function librosRecibidos($username)
     }
     return $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
+
 function librosPrestados($username)
 {
     $db = new BBDD();
@@ -150,4 +152,88 @@ function librosPrestados($username)
         return [];
     }
     return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function esAdmin($username)
+{
+    $db = new BBDD();
+    $sql = "SELECT role FROM usuario WHERE username = :username";
+    $parametros = [
+        "username" => $_SESSION["username"]
+    ];
+    $sentencia = $db->getData($sql, $parametros);
+    if ($sentencia === null) {
+        return false;
+    }
+    return $sentencia->fetchColumn() === "admin";
+}
+
+function prestamosAdministracion(): array
+{
+    $db = new BBDD();
+    $sql = "SELECT p.id, p.fecha_prestamo, p.fecha_devolucion, p.devuelto,
+                   libro.titulo, libro.autor,
+                   u_pide.username AS solicitante_username,
+                   u_dueno.username AS dueno_username
+            FROM prestamo p
+            INNER JOIN libro ON libro.id = p.id_libro
+            INNER JOIN usuario u_pide ON u_pide.id = p.id_usuario
+            INNER JOIN usuario u_dueno ON u_dueno.id = libro.id_usuario
+            ORDER BY p.fecha_prestamo DESC";
+    $sentencia = $db->getData($sql);
+    if ($sentencia === null) {
+        return [];
+    }
+    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function usuariosAdministracionConPrestamos(): array
+{
+    $db = new BBDD();
+    $sql = "SELECT u.id, u.nombre, u.apellidos, u.email, u.username, u.role,
+                   COUNT(p.id) AS total_prestamos
+            FROM usuario u
+            LEFT JOIN prestamo p ON p.id_usuario = u.id
+            GROUP BY u.id, u.nombre, u.apellidos, u.email, u.username, u.role
+            ORDER BY u.username ASC";
+    $sentencia = $db->getData($sql);
+    if ($sentencia === null) {
+        return [];
+    }
+    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function eliminarUsuarioSiSinPrestamos(int $idUsuario, string $adminUsername): bool|null|string
+{
+    $db = new BBDD();
+
+    // Evitar que el admin se borre a sí mismo
+    $sqlSelf = "SELECT id FROM usuario WHERE username = :username LIMIT 1";
+    $sSelf = $db->getData($sqlSelf, ["username" => $adminUsername]);
+    if ($sSelf === null) {
+        return null;
+    }
+    $idAdmin = (int)$sSelf->fetchColumn();
+    if ($idAdmin === $idUsuario) {
+        return "No puedes darte de baja a ti mismo.";
+    }
+
+    // Regla del enunciado: no borrar si tiene préstamos
+    $sqlCount = "SELECT COUNT(*) FROM prestamo WHERE id_usuario = :id_usuario";
+    $sCount = $db->getData($sqlCount, ["id_usuario" => $idUsuario]);
+    if ($sCount === null) {
+        return null;
+    }
+    $totalPrestamos = (int)$sCount->fetchColumn();
+    if ($totalPrestamos > 0) {
+        return "No se puede dar de baja: el usuario tiene préstamos registrados.";
+    }
+
+    $sqlDelete = "DELETE FROM usuario WHERE id = :id_usuario";
+    $sDelete = $db->getData($sqlDelete, ["id_usuario" => $idUsuario]);
+    if ($sDelete === null) {
+        return null;
+    }
+
+    return true;
 }
