@@ -22,9 +22,8 @@ if (!estaUsuarioLogeado()) {
         <span class="hidden sm:inline text-sm font-semibold tracking-wide text-slate-100">
             PRESTAMELO
         </span>
-    </a>
     </div>
-
+    </a>
     <!-- Buscador centrado -->
     <!--
     <div class="flex items-center gap-2 flex-none mx-4 w-full max-w-md">
