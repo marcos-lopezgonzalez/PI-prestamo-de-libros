@@ -132,6 +132,7 @@ class BBDD
             return null;
         }
     }
+
     public function removePrestamo(int $id):bool | null{
         if (!$this->isConectado() || $this->conexionPDO === null) {
             return null;
