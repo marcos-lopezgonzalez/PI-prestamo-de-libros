@@ -42,6 +42,7 @@ if (count($errores) !== 0) {
             setcookie("usernameLogin", $username, time() + (7 * 24 * 60 * 60), "/");
             setcookie("passwordLogin", $password, time() + (7 * 24 * 60 * 60), "/");
         }
+        esAdmin($username) ? $_SESSION["admin"] = true : $_SESSION["admin"] = false;
         header("Location: ./../../views/main.php");
         die;
     } else if ($login === null) {

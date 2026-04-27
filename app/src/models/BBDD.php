@@ -137,7 +137,7 @@ class BBDD
         if (!$this->isConectado() || $this->conexionPDO === null) {
             return null;
         }
-        $sql="UPDATE prestamo SET devuelto = 1 WHERE id_libro = :id";
+        $sql="UPDATE prestamo SET devuelto = 1, fecha_devolucion = NOW() WHERE id_libro = :id";
         try {
             $sentencia = $this->conexionPDO->prepare($sql);
             $sentencia->execute([

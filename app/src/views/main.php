@@ -103,6 +103,37 @@
                     </a>
                 </div>
             </article>
+            <?php if (esAdmin($_SESSION["username"])): ?>
+            <article
+                class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between h-full
+                       shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-yellow-200
+                       transition-all duration-200 ease-out">
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-800 mb-2">
+                        Administración
+                    </h2>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Gestiona prestamos y usuarios
+                    </p>
+                </div>
+                <div class="space-y-2">
+                    <a href="./admin/gestionar_usuarios.php"
+                       class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-yellow-500
+                              px-4 py-2 text-sm font-medium text-white hover:bg-yellow-600
+                              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400
+                              focus-visible:ring-offset-2 focus-visible:ring-offset-white transition">
+                        Gestionar usuarios
+                    </a>
+                    <a href="./admin/gestionar_prestamos.php"
+                       class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-yellow-500
+                              px-4 py-2 text-sm font-medium text-yellow-600 bg-white hover:bg-yellow-50
+                              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400
+                              focus-visible:ring-offset-2 focus-visible:ring-offset-white transition">
+                        Gestionar prestamos
+                    </a>
+                </div>
+            </article>
+            <?php endif; ?>
         </section>
     </main>
 
