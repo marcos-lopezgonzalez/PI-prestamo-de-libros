@@ -34,14 +34,25 @@
                                 <?= htmlspecialchars($libro["titulo"]) ?>
                             </h2>
                             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                                Autor: 
                                 <?= htmlspecialchars($libro["autor"]) ?>
                             </p>
                             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                                Género: 
                                 <?= htmlspecialchars($libro["genero"]) ?>
                             </p>
                             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                                Año:
                                 <?= htmlspecialchars($libro["anyo"]) ?>
                             </p>
+                            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                            Fecha de préstamo:
+
+                                <?= htmlspecialchars($libro["fecha_prestamo"]) ?>
+                            </p>
+                            <p> Dias Prestados: <?= htmlspecialchars($libro["dias_prestados"]) ?></p>
+                           
+                          
                         </div>
 
                     </article>

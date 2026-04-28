@@ -36,19 +36,29 @@ require __DIR__ . "/../../../vendor/autoload.php";
                                 <?= htmlspecialchars($libro["titulo"]) ?>
                             </h2>
                             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                                Autor: 
                                 <?= htmlspecialchars($libro["autor"]) ?>
                             </p>
                             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                                Género: 
                                 <?= htmlspecialchars($libro["genero"]) ?>
                             </p>
                             <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                                Año:
                                 <?= htmlspecialchars($libro["anyo"]) ?>
                             </p>
+                            <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                            Fecha de préstamo:
+                            
+                                <?= htmlspecialchars($libro["fecha_prestamo"]) ?>
+                            </p>
+                            <p> Dias Prestados: <?= htmlspecialchars($libro["dias_prestados"]) ?></p>
+                            <p></p>
                             <p>
                                 <form action="./../../controllers/prestamos/procesar-devolucion.php" method="post">
                                     <input type="hidden" name="id_libro" value="<?= htmlspecialchars($libro["id"]) ?>">
                                     <button type="submit"
-                                            class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-red-600
+                                            class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-red-600
                                                    px-4 py-2 text-sm font-medium text-red-700 bg-white hover:bg-red-50
                                                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400
                                                    focus-visible:ring-offset-2 focus-visible:ring-offset-white transition">

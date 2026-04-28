@@ -120,11 +120,16 @@ function librosDisponiblesParaPrestamo(string $usernameViewer, string $campoFilt
 function librosRecibidos($username)
 {
     $db = new BBDD();
-    $sql = "SELECT libro.*, usuario.username AS propietario_username
-            FROM libro
-            INNER JOIN prestamo ON libro.id = prestamo.id_libro
-            INNER JOIN usuario ON prestamo.id_usuario = usuario.id
-            WHERE usuario.username = :username AND prestamo.devuelto = 0";
+    $sql = "SELECT 
+    libro.*, 
+    usuario.username AS propietario_username,
+    DATE(prestamo.fecha_prestamo) AS fecha_prestamo,
+    DATEDIFF(CURDATE(), prestamo.fecha_prestamo) AS dias_prestados
+FROM libro
+INNER JOIN prestamo ON libro.id = prestamo.id_libro
+INNER JOIN usuario ON prestamo.id_usuario = usuario.id
+WHERE usuario.username = :username 
+  AND prestamo.devuelto = 0;";
     $parametros = [
         "username" => $username
     ];
@@ -137,11 +142,18 @@ function librosRecibidos($username)
 function librosPrestados($username)
 {
     $db = new BBDD();
-    $sql = "SELECT libro.*, usuario.username AS receptor_username
-    FROM libro INNER JOIN prestamo ON libro.id = prestamo.id_libro
-     INNER JOIN usuario ON prestamo.id_usuario = usuario.id WHERE 
-     libro.id_usuario = ( SELECT id FROM usuario WHERE username = :username ) 
-     AND prestamo.devuelto = 0";
+    $sql = "SELECT 
+            libro.*, 
+            usuario.username,
+            DATE(prestamo.fecha_prestamo) AS fecha_prestamo,
+            DATEDIFF(CURDATE(), prestamo.fecha_prestamo) AS dias_prestados
+        FROM libro 
+        INNER JOIN prestamo ON libro.id = prestamo.id_libro
+        INNER JOIN usuario ON prestamo.id_usuario = usuario.id 
+        WHERE libro.id_usuario = (
+            SELECT id FROM usuario WHERE username = :username
+        ) 
+        AND prestamo.devuelto = 0";
     $parametros = [
         ":username" => $username
     ];
