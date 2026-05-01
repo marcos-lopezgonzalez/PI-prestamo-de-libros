@@ -101,6 +101,13 @@
                               focus-visible:ring-offset-2 focus-visible:ring-offset-white transition">
                         Libros que he prestado
                     </a>
+                    <a href="./prestamos/lista_historial_prestamos.php"
+                       class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300
+                              px-4 py-2 text-sm font-medium text-slate-700 bg-white hover:bg-slate-50
+                              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
+                              focus-visible:ring-offset-2 focus-visible:ring-offset-white transition">
+                        Historial completo
+                    </a>
                 </div>
             </article>
             <?php if (esAdmin($_SESSION["username"])): ?>

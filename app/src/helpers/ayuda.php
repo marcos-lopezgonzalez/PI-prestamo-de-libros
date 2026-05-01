@@ -154,6 +154,31 @@ function librosPrestados($username)
     return $sentencia->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function historialPrestamos(string $username): array
+{
+    $db = new BBDD();
+    $sql = "SELECT 
+                p.id,
+                p.fecha_prestamo,
+                p.fecha_devolucion,
+                p.devuelto,
+                libro.titulo,
+                libro.autor,
+                libro.genero,
+                u_dueno.username AS propietario_username
+            FROM prestamo p
+            INNER JOIN libro ON libro.id = p.id_libro
+            INNER JOIN usuario u_yo ON u_yo.username = :username
+            INNER JOIN usuario u_dueno ON u_dueno.id = libro.id_usuario
+            WHERE p.id_usuario = u_yo.id
+            ORDER BY p.fecha_prestamo DESC";
+    $sentencia = $db->getData($sql, ["username" => $username]);
+    if ($sentencia === null) {
+        return [];
+    }
+    return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function esAdmin($username)
 {
     $db = new BBDD();
