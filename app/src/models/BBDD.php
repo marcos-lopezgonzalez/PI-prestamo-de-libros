@@ -149,4 +149,70 @@ class BBDD
         }
 
     }
+
+    public function addBooksBulk(array $rows, string $username): array
+    {
+        if (!$this->isConectado() || $this->conexionPDO === null) {
+            return [
+                "ok" => false,
+                "insertadas" => 0,
+                "error" => "Sin conexion con la base de datos.",
+            ];
+        }
+        if (count($rows) === 0) {
+            return [
+                "ok" => true,
+                "insertadas" => 0,
+                "error" => "",
+            ];
+        }
+
+        try {
+            $sqlUsuario = "SELECT id FROM usuario WHERE username = :username LIMIT 1";
+            $sentenciaUsuario = $this->conexionPDO->prepare($sqlUsuario);
+            $sentenciaUsuario->execute([":username" => $username]);
+            $idUsuario = $sentenciaUsuario->fetchColumn();
+            if ($idUsuario === false) {
+                return [
+                    "ok" => false,
+                    "insertadas" => 0,
+                    "error" => "Usuario no encontrado.",
+                ];
+            }
+
+            $this->conexionPDO->beginTransaction();
+
+            $sqlInsert = "INSERT INTO libro (titulo, autor, genero, anyo, id_usuario)
+                          VALUES (:titulo, :autor, :genero, :anyo, :id_usuario)";
+            $sentenciaInsert = $this->conexionPDO->prepare($sqlInsert);
+
+            $insertadas = 0;
+            foreach ($rows as $row) {
+                $sentenciaInsert->execute([
+                    ":titulo" => $row["titulo"],
+                    ":autor" => $row["autor"],
+                    ":genero" => $row["genero"],
+                    ":anyo" => $row["anyo"],
+                    ":id_usuario" => (int)$idUsuario,
+                ]);
+                $insertadas++;
+            }
+
+            $this->conexionPDO->commit();
+            return [
+                "ok" => true,
+                "insertadas" => $insertadas,
+                "error" => "",
+            ];
+        } catch (PDOException $e) {
+            if ($this->conexionPDO->inTransaction()) {
+                $this->conexionPDO->rollBack();
+            }
+            return [
+                "ok" => false,
+                "insertadas" => 0,
+                "error" => "Fallo al insertar libros en bloque.",
+            ];
+        }
+    }
 }
